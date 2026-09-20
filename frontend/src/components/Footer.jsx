@@ -12,10 +12,10 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <img 
-                src="/logo.jpg" 
-                alt="OrganDonor Logo" 
-                className="w-12 h-12 object-cover rounded-full cursor-zoom-in hover:scale-110 transition-transform bg-white" 
+              <img
+                src="/logo.jpg"
+                alt="OrganDonor Logo"
+                className="w-12 h-12 object-cover rounded-full cursor-zoom-in hover:scale-110 transition-transform bg-white"
                 onClick={() => setIsLogoModalOpen(true)}
               />
               <span className="text-xl font-bold text-white">OrganDonor</span>
@@ -75,11 +75,12 @@ const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-primary-400" />
-                <span>dhyaneshdhyanesh739@gmail.com</span>
+                <span>kishormagesh2611@gmail.com</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-primary-400" />
-                <span>+91-7550317811</span>
+                <span>+91-7418551673
+                </span>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-primary-400" />
@@ -91,21 +92,21 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
           <p>&copy; {new Date().getFullYear()} Organ Donor System. All rights reserved.</p>
-          <p className="mt-2 text-gray-500">Built with ❤️ by <span className="text-primary-400 font-semibold">Dhyanesh S E</span></p>
+          <p className="mt-2 text-gray-500">Built with ❤️ by <span className="text-primary-400 font-semibold">kishor M</span></p>
         </div>
       </div>
 
       {/* Logo Preview Modal - WhatsApp Style */}
-      <Modal 
-        isOpen={isLogoModalOpen} 
+      <Modal
+        isOpen={isLogoModalOpen}
         onClose={() => setIsLogoModalOpen(false)}
         size="none"
         className="!bg-transparent p-0 border-none shadow-none"
       >
         <div className="relative flex flex-col items-center justify-end h-screen w-screen pb-12 md:pb-24" onClick={() => setIsLogoModalOpen(false)}>
-          <img 
-            src="/logo.jpg" 
-            alt="Full Logo View" 
+          <img
+            src="/logo.jpg"
+            alt="Full Logo View"
             className="max-w-[90vw] max-h-[85vh] object-contain shadow-2xl animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           />
