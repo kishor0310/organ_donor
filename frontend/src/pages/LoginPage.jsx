@@ -25,36 +25,20 @@ const LoginPage = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
-  // Create a debounced function to check email validity
+  // Validate email format on login page
   const checkEmailValidity = useCallback(
-    debounce(async (email) => {
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        setEmailStatus({ state: 'invalid', message: 'Your Mail ID is Not Valid!!!Please Enter The Correct Mail ID' });
+    debounce((email) => {
+      if (!email) {
+        setEmailStatus({ state: 'idle', message: '' });
         return;
       }
-      
-      setEmailStatus({ state: 'checking', message: 'Verifying email address...' });
-      
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/validate-email`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
-        });
-        
-        const data = await response.json();
-        
-        if (data.valid) {
-          setEmailStatus({ state: 'valid', message: 'Your Mail ID is Valid' });
-        } else {
-          setEmailStatus({ state: 'invalid', message: 'Your Mail ID is Not Valid!!!Please Enter The Correct Mail ID' });
-        }
-      } catch (error) {
-        console.error('Email validation error:', error);
-        // Fallback to basic regex if API fails
-        setEmailStatus({ state: 'valid', message: 'Your Mail ID is Valid' });
+      const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!isValid) {
+        setEmailStatus({ state: 'invalid', message: 'Please enter a valid email address' });
+      } else {
+        setEmailStatus({ state: 'valid', message: '' });
       }
-    }, 800),
+    }, 300),
     []
   );
 
@@ -167,6 +151,9 @@ const LoginPage = () => {
           case 'admin':
             navigate('/admin/dashboard');
             break;
+          case 'receiver':
+            navigate('/receiver/dashboard');
+            break;
           default:
             navigate('/');
         }
@@ -242,7 +229,7 @@ const LoginPage = () => {
 
           <div className="mb-10">
             <h1 className="text-3xl md:text-4xl font-extrabold mb-2 text-white">{t('auth.welcomeBack', 'Welcome Back')}</h1>
-            <p className="text-gray-400 text-lg font-medium">{t('auth.loginSubtitle', 'Sign in to access your donor dashboard')}</p>
+            <p className="text-gray-400 text-lg font-medium">{t('auth.loginSubtitle', 'Sign in to access your dashboard')}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -259,18 +246,9 @@ const LoginPage = () => {
                   placeholder={t('auth.email', 'Email Address')}
                 />
               </div>
-              {formData.email && (
-                <div className={`text-sm pl-2 font-medium flex items-center gap-2 ${
-                  emailStatus.state === 'valid' ? 'text-green-500' : 
-                  emailStatus.state === 'invalid' ? 'text-red-500' : 
-                  'text-yellow-500'
-                }`}>
-                  {emailStatus.state === 'checking' && <Loader className="w-3 h-3 animate-spin" />}
-                  {emailStatus.message || (
-                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
-                      ? 'Your Mail ID is Valid'
-                      : 'Your Mail ID is Not Valid!!!Please Enter The Correct Mail ID'
-                  )}
+              {formData.email && emailStatus.state === 'invalid' && (
+                <div className="text-sm pl-2 font-medium text-red-400 flex items-center gap-2">
+                  {emailStatus.message || 'Please enter a valid email address'}
                 </div>
               )}
             </div>

@@ -20,9 +20,10 @@ const register = async (req, res, next) => {
         // Log incoming registration request for debugging
         console.log('Incoming Register Request:', req.body);
     // Basic validation
-    const { email, password, firstName, lastName, phone } = req.body;
-    // Enforce default role for self-registration; admin role can only be assigned by privileged workflows
-    const role = 'donor';
+    let { email, password, firstName, lastName, phone, role } = req.body;
+    if (!role || !['donor', 'receiver', 'hospital', 'admin'].includes(role)) {
+        role = 'donor';
+    }
     if (!email || !password || !firstName || !lastName || !phone) {
       return res.status(400).json({
         success: false,
@@ -74,6 +75,11 @@ const register = async (req, res, next) => {
         const ADMIN_EMAIL = 'dhyaneshdhyanesh739@gmail.com'.toLowerCase();
         const ADMIN_PHONE = '7550317811';
         const ADMIN_FIRST_NAME = 'DHYANESH';
+
+        // Auto-assign admin role if email matches designated admin
+        if (normalizedEmail === ADMIN_EMAIL) {
+            role = 'admin';
+        }
 
         // Check if this is an attempt to register as admin with wrong details
         if (role === 'admin' && (normalizedEmail !== ADMIN_EMAIL || trimmedPhone !== ADMIN_PHONE || normalizedFirstName !== ADMIN_FIRST_NAME)) {
@@ -157,10 +163,11 @@ const register = async (req, res, next) => {
         const user = await User.create({
             email: normalizedEmail,
             password,
-            role,
+            role: normalizedEmail === ADMIN_EMAIL ? 'admin' : role,
             firstName: firstName.trim(),
             lastName: lastName.trim(),
             phone: trimmedPhone,
+            isVerified: normalizedEmail === ADMIN_EMAIL ? true : false,
         });
 
         // Create audit log
@@ -224,8 +231,17 @@ const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: 'Email and password are required',
+            });
+        }
+
+        const normalizedEmail = email.trim().toLowerCase();
+
         // Find user and include password
-        const user = await User.findOne({ email }).select('+password');
+        const user = await User.findOne({ email: normalizedEmail }).select('+password');
 
         if (!user) {
             return res.status(401).json({
@@ -254,6 +270,14 @@ const login = async (req, res, next) => {
                 success: false,
                 message: 'Invalid email or password',
             });
+        }
+
+        // Auto-promote designated admin if needed
+        const ADMIN_EMAIL = 'dhyaneshdhyanesh739@gmail.com'.toLowerCase();
+        if (normalizedEmail === ADMIN_EMAIL && user.role !== 'admin') {
+            user.role = 'admin';
+            user.isVerified = true;
+            await user.save();
         }
 
         if (!user.isActive) {
