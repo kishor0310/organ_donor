@@ -23,11 +23,14 @@ import DonorHistoryCart from './DonorHistoryCart';
 import ReceiverHistoryCart from './ReceiverHistoryCart';
 import { adminService } from '../services';
 import { useToast } from '../context/ToastContext';
+import { useLanguage } from '../context/LanguageContext';
+import LanguageSelector from './LanguageSelector';
 import Modal from './ui/Modal';
 
 const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const { isDark, toggleTheme } = useTheme();
+  const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLogoModalOpen, setIsLogoModalOpen] = useState(false);
   const toast = useToast();
@@ -114,26 +117,26 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             <Link to="/organs" className="btn-ghost">
-              Organs Info
+              {t('nav.organs', 'Organs Info')}
             </Link>
             {!isAuthenticated ? (
               <>
                 <Link to="/register" className="btn-primary">
-                  Register Now
+                  {t('nav.register', 'Register Now')}
                 </Link>
                 <Link to="/login" className="btn-ghost">
-                  Login
+                  {t('nav.login', 'Login')}
                 </Link>
               </>
             ) : (
               <>
                 <Link to={getDashboardLink()} className="btn-ghost flex items-center gap-2">
                   <Layout className="w-4 h-4" />
-                  Dashboard
+                  {t('nav.dashboard', 'Dashboard')}
                 </Link>
                 <button onClick={handleLogout} className="btn-ghost flex items-center gap-2">
                   <LogOut className="w-4 h-4" />
-                  Logout
+                  {t('nav.logout', 'Logout')}
                 </button>
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-primary-100 dark:bg-primary-900/30 rounded-full">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -209,6 +212,9 @@ const Navbar = () => {
                 <ReceiverHistoryCart />
               )}
 
+              {/* Language Selector */}
+              <LanguageSelector />
+
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -257,6 +263,16 @@ const Navbar = () => {
             className="md:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900"
           >
             <div className="px-4 py-4 space-y-2">
+              {/* Mobile Language Selector */}
+              <LanguageSelector isMobile={true} />
+
+              <Link
+                to="/organs"
+                className="block px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {t('nav.organs', 'Organs Info')}
+              </Link>
               {!isAuthenticated ? (
                 <>
                   <Link
@@ -264,33 +280,33 @@ const Navbar = () => {
                     className="block px-4 py-2 bg-primary-600 text-white rounded-lg text-center font-bold"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Register Now
+                    {t('nav.register', 'Register Now')}
                   </Link>
                   <Link
                     to="/login"
-                    className="block px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                    className="block px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 font-medium"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Login
+                    {t('nav.login', 'Login')}
                   </Link>
                 </>
               ) : (
                 <>
                   <Link
                     to={getDashboardLink()}
-                    className="block px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                    className="block px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 font-medium"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Dashboard
+                    {t('nav.dashboard', 'Dashboard')}
                   </Link>
                   <button
                     onClick={() => {
                       handleLogout();
                       setMobileMenuOpen(false);
                     }}
-                    className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                    className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 font-medium"
                   >
-                    Logout
+                    {t('nav.logout', 'Logout')}
                   </button>
                 </>
               )}

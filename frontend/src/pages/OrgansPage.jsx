@@ -10,8 +10,10 @@ import intestinesImg from '../assets/organs/intestines.png';
 import corneasImg from '../assets/organs/corneas.png';
 import skinImg from '../assets/organs/skin.png';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 const OrgansPage = () => {
+  const { t } = useLanguage();
   const [selectedOrgan, setSelectedOrgan] = useState(null);
 
   const organs = [
@@ -139,7 +141,7 @@ const OrgansPage = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-bold mb-6"
           >
-            The Gift of Life: Organs & Tissues
+            {t('organs.title', 'The Gift of Life: Organs & Tissues')}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -147,8 +149,7 @@ const OrgansPage = () => {
             transition={{ delay: 0.2 }}
             className="text-xl opacity-90 max-w-3xl mx-auto"
           >
-            One single donor can save up to 8 lives and enhance the lives of over 75 others. 
-            Explore the incredible impact of organ donation.
+            {t('organs.subtitle', 'One single donor can save up to 8 lives and enhance the lives of over 75 others. Explore the incredible impact of organ donation.')}
           </motion.p>
         </div>
       </section>
@@ -177,14 +178,16 @@ const OrgansPage = () => {
                   {organ.impact}
                 </div>
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                  <span className="text-white font-bold px-4 py-2 rounded-xl border border-white/50">View Details</span>
+                  <span className="text-white font-bold px-4 py-2 rounded-xl border border-white/50">{t('organs.viewDetails', 'View Details')}</span>
                 </div>
               </div>
 
               {/* Content */}
               <div className="p-6 space-y-4">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-2xl font-bold gradient-text">{organ.name}</h3>
+                  <h3 className="text-2xl font-bold gradient-text">
+                    {t(`organs.${organ.name.toLowerCase()}`, organ.name)}
+                  </h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-2">
                   {organ.description}

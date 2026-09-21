@@ -62,7 +62,9 @@ const sendAuthResponse = async (user, res, req, action) => {
  */
 exports.googleLogin = async (req, res, next) => {
     try {
-        const { idToken, accessToken: googleAccessToken, role } = req.body;
+        const { idToken, accessToken: googleAccessToken } = req.body;
+        // Role must be assigned by internal policy, not by the client
+        const role = 'donor';
 
         let email, googleId, given_name, family_name;
 
@@ -134,7 +136,9 @@ exports.googleLogin = async (req, res, next) => {
  */
 exports.facebookLogin = async (req, res, next) => {
     try {
-        const { accessToken, role } = req.body;
+        const { accessToken } = req.body;
+        // Role must be assigned by internal policy, not by the client
+        const role = 'donor';
 
         if (!accessToken) {
             return res.status(400).json({ success: false, message: 'Facebook Access Token is required' });

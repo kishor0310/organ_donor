@@ -7,8 +7,10 @@ import ActivityFeed from '../components/ActivityFeed';
 import OrganDemandList from '../components/OrganDemandList';
 import axios from 'axios';
 import homepageBg from '../assets/homepage_bg.png';
+import { useLanguage } from '../context/LanguageContext';
 
 const LandingPage = () => {
+  const { t } = useLanguage();
   const [stats, setStats] = useState({
     totalDonors: '10,000+',
     livesSaved: '2,500+',
@@ -49,10 +51,10 @@ const LandingPage = () => {
   }, []);
 
   const statItems = [
-    { label: 'Registered Donors', value: stats.totalDonors, icon: Users },
-    { label: 'Lives Saved', value: stats.livesSaved, icon: Heart },
-    { label: 'Partner Hospitals', value: stats.hospitals, icon: Building2 },
-    { label: 'Success Rate', value: stats.successRate, icon: Activity },
+    { label: t('landing.registeredDonors', 'Registered Donors'), value: stats.totalDonors, icon: Users },
+    { label: t('landing.livesSaved', 'Lives Saved'), value: stats.livesSaved, icon: Heart },
+    { label: t('landing.partnerHospitals', 'Partner Hospitals'), value: stats.hospitals, icon: Building2 },
+    { label: t('landing.successRate', 'Success Rate'), value: stats.successRate, icon: Activity },
   ];
 
   return (
@@ -75,20 +77,20 @@ const LandingPage = () => {
               className="space-y-8"
             >
               <h1 className="text-5xl md:text-6xl font-bold leading-tight">
-                <span className="gradient-text">Save Lives</span>
+                <span className="gradient-text">{t('landing.heroTitle1', 'Save Lives')}</span>
                 <br />
-                Through Organ Donation
+                {t('landing.heroTitle2', 'Through Organ Donation')}
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300">
-                Join thousands of heroes who have pledged to give the gift of life. Register as an organ donor today and make a lasting impact.
+                {t('landing.heroSubtitle', 'Join thousands of heroes who have pledged to give the gift of life. Register as an organ donor today and make a lasting impact.')}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link to="/register" className="btn-primary flex items-center gap-2 shadow-xl shadow-primary-500/20">
-                  Register Now
+                  {t('landing.registerNow', 'Register Now')}
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link to="/login" className="btn-secondary">
-                  Sign In
+                  {t('landing.signIn', 'Sign In')}
                 </Link>
               </div>
             </motion.div>

@@ -5,6 +5,7 @@ import App from './App.jsx';
 import './index.css';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { ToastProvider } from './context/ToastContext';
 import { SocketProvider } from './context/SocketContext';
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -22,15 +23,17 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <GoogleOAuthProvider clientId="1035790321219-5h58k71ovo41c98an7lmanmq1lhcrhoh.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || "1035790321219-5h58k71ovo41c98an7lmanmq1lhcrhoh.apps.googleusercontent.com"}>
         <ThemeProvider>
-          <ToastProvider>
-            <AuthProvider>
-              <SocketProvider>
-                <App />
-              </SocketProvider>
-            </AuthProvider>
-          </ToastProvider>
+          <LanguageProvider>
+            <ToastProvider>
+              <AuthProvider>
+                <SocketProvider>
+                  <App />
+                </SocketProvider>
+              </AuthProvider>
+            </ToastProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </GoogleOAuthProvider>
     </QueryClientProvider>

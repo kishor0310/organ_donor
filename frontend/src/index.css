@@ -265,3 +265,30 @@ select option {
 .country-item.active {
   @apply bg-red-500/20 text-red-400;
 }
+
+/* Multilingual & Google Translate Aesthetics */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-gadget-simple,
+.goog-te-gadget,
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}
+
+.goog-tooltip {
+  display: none !important;
+}
+
+.goog-tooltip:hover {
+  display: none !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}

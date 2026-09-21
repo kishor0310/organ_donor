@@ -9,9 +9,11 @@ import FacebookLogin from 'react-facebook-login-lite';
 import debounce from 'lodash.debounce';
 import authBg from '../assets/auth_bg.png';
 import loginHero from '../assets/login_hero.png';
+import { useLanguage } from '../context/LanguageContext';
 
 
 const LoginPage = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -239,8 +241,8 @@ const LoginPage = () => {
           </Link>
 
           <div className="mb-10">
-            <h1 className="text-3xl md:text-4xl font-extrabold mb-2 text-white">Organ Donor Registration</h1>
-            <p className="text-gray-400 text-lg font-medium">Give the Gift of Life, Save Lives</p>
+            <h1 className="text-3xl md:text-4xl font-extrabold mb-2 text-white">{t('auth.welcomeBack', 'Welcome Back')}</h1>
+            <p className="text-gray-400 text-lg font-medium">{t('auth.loginSubtitle', 'Sign in to access your donor dashboard')}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -254,7 +256,7 @@ const LoginPage = () => {
                   onChange={handleChange}
                   required
                   className="w-full bg-[#2a2d45] border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all font-medium"
-                  placeholder="Email Address"
+                  placeholder={t('auth.email', 'Email Address')}
                 />
               </div>
               {formData.email && (
@@ -283,7 +285,7 @@ const LoginPage = () => {
                   onChange={handleChange}
                   required
                   className="w-full bg-[#2a2d45] border border-white/10 rounded-xl py-4 pl-12 pr-12 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all font-medium"
-                  placeholder="Password"
+                  placeholder={t('auth.password', 'Password')}
                 />
                 <button
                   type="button"
@@ -301,7 +303,7 @@ const LoginPage = () => {
                 <span className="text-gray-400 group-hover:text-white transition-colors">Remember Me</span>
               </label>
               <Link to="/forgot-password" size="sm" className="text-gray-400 hover:text-white transition-colors">
-                Forgot Password?
+                {t('auth.forgotPassword', 'Forgot Password?')}
               </Link>
             </div>
 
@@ -313,10 +315,10 @@ const LoginPage = () => {
               {loading ? (
                 <>
                   <Loader className="w-5 h-5 animate-spin" />
-                  Logging in...
+                  {t('common.loading', 'Loading...')}
                 </>
               ) : (
-                'Login'
+                t('nav.login', 'Login')
               )}
             </button>
 
@@ -325,7 +327,7 @@ const LoginPage = () => {
                 <div className="w-full border-t border-white/5"></div>
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-[#1a1c2e] px-4 text-gray-500">Or continue with</span>
+                <span className="bg-[#1a1c2e] px-4 text-gray-500">{t('auth.orContinueWith', 'Or continue with')}</span>
               </div>
             </div>
 

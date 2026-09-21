@@ -20,8 +20,10 @@ const register = async (req, res, next) => {
         // Log incoming registration request for debugging
         console.log('Incoming Register Request:', req.body);
     // Basic validation
-    const { email, password, role, firstName, lastName, phone } = req.body;
-    if (!email || !password || !role || !firstName || !lastName || !phone) {
+    const { email, password, firstName, lastName, phone } = req.body;
+    // Enforce default role for self-registration; admin role can only be assigned by privileged workflows
+    const role = 'donor';
+    if (!email || !password || !firstName || !lastName || !phone) {
       return res.status(400).json({
         success: false,
         field: 'missing_fields',

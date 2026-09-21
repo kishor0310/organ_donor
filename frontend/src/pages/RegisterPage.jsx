@@ -9,10 +9,12 @@ import FacebookLogin from 'react-facebook-login-lite';
 import debounce from 'lodash.debounce';
 import { countries } from '../utils/countryData';
 import registerHero from '../assets/register_hero.png';
+import { useLanguage } from '../context/LanguageContext';
 
 const ADMIN_EMAIL = 'dhyaneshdhyanesh739@gmail.com';
 
 const RegisterPage = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -347,14 +349,14 @@ const RegisterPage = () => {
         {/* Right Side - Form */}
         <div className="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center bg-[#1e293b]/20">
           <div className="mb-10 text-center md:text-left">
-            <h2 className="text-3xl font-bold text-white mb-2">Create Account</h2>
-            <p className="text-white/50">Join us in saving lives</p>
+            <h2 className="text-3xl font-bold text-white mb-2">{t('auth.createAccount', 'Create Account')}</h2>
+            <p className="text-white/50">{t('auth.registerSubtitle', 'Join us in saving lives')}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Role Selection */}
             <div className="space-y-3">
-              <label className="text-sm font-medium text-white/70">I am a</label>
+              <label className="text-sm font-medium text-white/70">{t('auth.registerAs', 'Register as')}</label>
               <div className="flex gap-4">
                 {['donor', 'receiver', 'hospital'].map((role) => (
                   <button
@@ -367,7 +369,7 @@ const RegisterPage = () => {
                         : 'border-white/10 bg-white/5 text-white/70 hover:bg-white/10'
                     }`}
                   >
-                    {role}
+                    {t(`role.${role}`, role)}
                   </button>
                 ))}
               </div>
@@ -385,7 +387,7 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 required
                 className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:bg-white/10 transition-all"
-                placeholder="Full Name"
+                placeholder={t('auth.firstName', 'Full Name')}
               />
             </div>
 
@@ -402,7 +404,7 @@ const RegisterPage = () => {
                   onChange={handleChange}
                   required
                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:bg-white/10 transition-all"
-                  placeholder="Email Address"
+                  placeholder={t('auth.email', 'Email Address')}
                 />
               </div>
               {formData.email && (
@@ -580,7 +582,7 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 required
                 className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:bg-white/10 transition-all"
-                placeholder="Password"
+                placeholder={t('auth.password', 'Password')}
               />
             </div>
 
@@ -595,7 +597,7 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 required
                 className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:bg-white/10 transition-all"
-                placeholder="Confirm Password"
+                placeholder={t('auth.confirmPassword', 'Confirm Password')}
               />
             </div>
 
@@ -604,7 +606,7 @@ const RegisterPage = () => {
               disabled={loading}
               className="w-full bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold py-4 rounded-2xl shadow-lg shadow-red-500/30 transition-all duration-300 transform active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
             >
-              {loading ? <Loader className="w-5 h-5 animate-spin" /> : 'Register'}
+              {loading ? <Loader className="w-5 h-5 animate-spin" /> : t('nav.register', 'Register')}
             </button>
           </form>
 
@@ -634,9 +636,9 @@ const RegisterPage = () => {
           </div>
 
           <div className="mt-8 text-center text-sm">
-            <span className="text-white/40">Already have an account? </span>
+            <span className="text-white/40">{t('auth.alreadyHaveAccount', 'Already have an account?')} </span>
             <Link to="/login" className="text-emerald-400 font-bold hover:text-emerald-300 transition-colors">
-              Login
+              {t('nav.login', 'Sign In')}
             </Link>
           </div>
         </div>

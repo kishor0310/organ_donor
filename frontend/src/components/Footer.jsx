@@ -2,9 +2,11 @@ import { Heart, Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Modal from './ui/Modal';
+import { useLanguage } from '../context/LanguageContext';
 
 const Footer = () => {
   const [isLogoModalOpen, setIsLogoModalOpen] = useState(false);
+  const { t } = useLanguage();
   return (
     <footer className="bg-gray-900 text-gray-300 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -21,27 +23,27 @@ const Footer = () => {
               <span className="text-xl font-bold text-white">OrganDonor</span>
             </div>
             <p className="text-sm text-gray-400">
-              Saving lives through organ donation. Join us in making a difference.
+              {t('footer.tagline', 'Saving lives through organ donation. Join us in making a difference.')}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-white font-semibold mb-4">{t('footer.quickLinks', 'Quick Links')}</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/" className="hover:text-primary-400 transition-colors">
-                  Home
+                  {t('footer.home', 'Home')}
                 </Link>
               </li>
               <li>
                 <Link to="/register" className="hover:text-primary-400 transition-colors">
-                  Register
+                  {t('nav.register', 'Register')}
                 </Link>
               </li>
               <li>
                 <Link to="/login" className="hover:text-primary-400 transition-colors">
-                  Login
+                  {t('nav.login', 'Login')}
                 </Link>
               </li>
             </ul>
@@ -49,21 +51,21 @@ const Footer = () => {
 
           {/* Resources */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Resources</h3>
+            <h3 className="text-white font-semibold mb-4">{t('footer.resources', 'Resources')}</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="#" className="hover:text-primary-400 transition-colors">
-                  About Organ Donation
+                  {t('footer.about', 'About Organ Donation')}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-primary-400 transition-colors">
-                  FAQs
+                  {t('footer.faqs', 'FAQs')}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-primary-400 transition-colors">
-                  Privacy Policy
+                  {t('footer.privacy', 'Privacy Policy')}
                 </a>
               </li>
             </ul>
@@ -71,7 +73,7 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Contact Us</h3>
+            <h3 className="text-white font-semibold mb-4">{t('footer.contact', 'Contact Us')}</h3>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-primary-400" />
