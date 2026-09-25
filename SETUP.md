@@ -4,26 +4,25 @@
 
 ### 1. Install Root Dependencies
 ```bash
-cd e:\kiddo\organ-donor-system
 npm install
 ```
 
 ### 2. Install Backend Dependencies
 ```bash
-cd server
+cd backend
 npm install
 ```
 
 ### 3. Install Frontend Dependencies
 ```bash
-cd client
+cd frontend
 npm install
 ```
 
 ## Configuration
 
 ### Backend (.env)
-Create `server/.env` from `server/.env.example`:
+Create `backend/.env` from `backend/.env.example`:
 
 ```env
 # Server
@@ -58,7 +57,7 @@ CLIENT_URL=http://localhost:5173
 ```
 
 ### Frontend (.env)
-Create `client/.env` from `client/.env.example`:
+Create `frontend/.env` from `frontend/.env.example`:
 
 ```env
 VITE_API_URL=http://localhost:5000/api
@@ -76,13 +75,13 @@ npm run dev
 
 **Terminal 1 - Backend:**
 ```bash
-cd server
+cd backend
 npm run dev
 ```
 
 **Terminal 2 - Frontend:**
 ```bash
-cd client
+cd frontend
 npm run dev
 ```
 
